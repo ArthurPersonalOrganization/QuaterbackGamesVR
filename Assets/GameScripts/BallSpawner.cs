@@ -15,11 +15,13 @@ public class BallSpawner : MonoBehaviour
     //  private GameObject[] ballArray;
 
     [Header("Ball Settings values")]
+    public bool needConfig = false;
     public TMP_Text smoothDuration;
     public TMP_Text velScale;
     public TMP_Text angVel;
     public TMP_Text toitRot;
     
+     
 
     public bool trackRot { get; set; }
     public float throwSmoothingDuration { get; set; }
@@ -35,6 +37,21 @@ public class BallSpawner : MonoBehaviour
     public void SpawnBall()
     {
         GameObject ball = Instantiate(BallPrefab);
+       
+        if (needConfig)
+        {
+            ConfigBall(ball);
+        }
+
+        
+        ball.transform.localPosition = ballSpawnerOffset.localPosition;
+        ball.transform.localRotation = Quaternion.identity;
+        ball.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+        ball.gameObject.name = "ball";
+    }
+     
+    private void ConfigBall(GameObject ball)
+    {
         XRGrabInteractable interactable;
         interactable = ball.GetComponent<XRGrabInteractable>();
         interactable.throwSmoothingDuration = throwSmoothingDuration;
@@ -43,12 +60,7 @@ public class BallSpawner : MonoBehaviour
         interactable.angularVelocityDamping = angularDamp;
         interactable.trackRotation = trackRot;
         interactable.tightenRotation = tightenRot;
-        ball.transform.localPosition = ballSpawnerOffset.localPosition;
-        ball.transform.localRotation = Quaternion.identity;
-        ball.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
-        ball.gameObject.name = "ball";
     }
-     
 
     private void OnTriggerExit(Collider other)
     {
