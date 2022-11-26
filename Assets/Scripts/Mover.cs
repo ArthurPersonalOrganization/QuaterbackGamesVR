@@ -16,16 +16,22 @@ public class Mover : MonoBehaviour
     private int pointDestiny = 0;
 
     [SerializeField]
-    int pathLenght = 0;
-    
+    private int pathLenght = 0;
 
+    [Header("Index values")]
+    public int prev = 0;
+    public int index = 0;
+    public int next = 0;
 
     private void Start()
     {
         pathLenght = path.Length;
         pointSource = 0;
         pointDestiny = 1;
+        MoveThroughPath();
+
     }
+
     // Update is called once per frame
     private void Update()
     {
@@ -35,15 +41,45 @@ public class Mover : MonoBehaviour
         }
     }
 
+    private void MoveThroughPath()
+    {
+        StartCoroutine(SequenceRoutine());
+    }
+
+    private IEnumerator SequenceRoutine()
+    {
+        //we have n number of points in path
+       // Debug.Log("number of points in the path " + pathLenght);
+        while (index < pathLenght)
+        {
+            prev = index - 1;
+            next = index + 1;
+
+            if (next >= pathLenght)
+            {
+                //Debug.Log("reached  top number");
+                next = 0;
+                // Debug.Log("From " + index + " to " + next);
+                yield return StartCoroutine(MoveRoutine(path[index].localPosition, path[next].localPosition, speed));
+
+                index = 0;
+                next = index + 1;
+                prev = index - 1;
+            }
+
+            //Debug.Log("From " + index + " to " + next);
+            yield return StartCoroutine(MoveRoutine(path[index].localPosition, path[next].localPosition, speed));
+
+            //yield return new WaitForSeconds(1f);
+            index++;
+        }
+        yield return new WaitForEndOfFrame();
+    }
+
     private void Move()
     {
-        
-        
-       
         if (pathLenght >= 2)
         {
-            
-            
             StartCoroutine(MoveRoutine(path[pointSource].localPosition, path[pointDestiny].localPosition, speed));
         }
         else
@@ -64,27 +100,6 @@ public class Mover : MonoBehaviour
         }
         this.transform.localPosition = b;
 
-        Debug.Log("At position moving to ");
-         
-         
+      //  Debug.Log("At position moving to ");
     }
-
-    void MoveThroughPath()
-    {
-        //we have n number of points in path
-        Debug.Log("number of points in the path " + pathLenght);
-        int i = 0;
-        while (i <= pathLenght)
-        {
-            Debug.Log(path[i]+" "+path[i+1]);
-            i++;
-        }
-        i = pathLenght;
-        while (i >= 0)
-        {
-            Debug.Log(path[i] + " " + path[i-1]);
-            i--;
-        }
-    }
-
 }

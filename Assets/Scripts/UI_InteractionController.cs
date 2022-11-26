@@ -12,6 +12,9 @@ public class UI_InteractionController : MonoBehaviour
     GameObject UIController;
 
     [SerializeField]
+    GameObject UIRightController;
+
+    [SerializeField]
     GameObject BaseController;
 
     [SerializeField]
@@ -44,6 +47,8 @@ public class UI_InteractionController : MonoBehaviour
         //Deactivating UI Controller by default
         UIController.GetComponent<XRRayInteractor>().enabled = false;
         UIController.GetComponent<XRInteractorLineVisual>().enabled = false;
+        UIRightController.GetComponent<XRRayInteractor>().enabled = false;
+        UIRightController.GetComponent<XRInteractorLineVisual>().enabled = false;
     }
 
     /// <summary>
@@ -53,19 +58,19 @@ public class UI_InteractionController : MonoBehaviour
     /// <param name="obj"></param>
     private void ActivateUIMode(InputAction.CallbackContext obj)
     {
-        /*
+        
         if (!isUICanvasActive)
         {
             isUICanvasActive = true;
 
             //Activating UI Controller by enabling its XR Ray Interactor and XR Interactor Line Visual
-            UIController.GetComponent<XRRayInteractor>().enabled = true;
-            UIController.GetComponent<XRInteractorLineVisual>().enabled = true;
+         //   UIController.GetComponent<XRRayInteractor>().enabled = true;
+        //    UIController.GetComponent<XRInteractorLineVisual>().enabled = true;
+            UIRightController.GetComponent<XRRayInteractor>().enabled = true;
+            UIRightController.GetComponent<XRInteractorLineVisual>().enabled = true;
 
             //Deactivating Base Controller by disabling its XR Direct Interactor
             BaseController.GetComponent<XRDirectInteractor>().enabled = false;
-
-          
 
             //Activating the UI Canvas Gameobject
             UICanvasGameobject.SetActive(true);
@@ -75,8 +80,10 @@ public class UI_InteractionController : MonoBehaviour
             isUICanvasActive = false;
 
             //De-Activating UI Controller by enabling its XR Ray Interactor and XR Interactor Line Visual
-            UIController.GetComponent<XRRayInteractor>().enabled = false;
-            UIController.GetComponent<XRInteractorLineVisual>().enabled = false;
+         //   UIController.GetComponent<XRRayInteractor>().enabled = false;
+         //   UIController.GetComponent<XRInteractorLineVisual>().enabled = false;
+            UIRightController.GetComponent<XRRayInteractor>().enabled = false;
+            UIRightController.GetComponent<XRInteractorLineVisual>().enabled = false;
 
             //Activating Base Controller by disabling its XR Direct Interactor
             BaseController.GetComponent<XRDirectInteractor>().enabled = true;
@@ -84,6 +91,6 @@ public class UI_InteractionController : MonoBehaviour
             //De-Activating the UI Canvas Gameobject
             UICanvasGameobject.SetActive(false);
         }
-        */
+        
     }
 }
